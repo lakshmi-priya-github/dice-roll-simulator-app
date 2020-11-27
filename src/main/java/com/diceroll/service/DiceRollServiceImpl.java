@@ -30,6 +30,14 @@ public class DiceRollServiceImpl implements DiceRollService {
 	@Autowired
 	private DiceRollRepository diceRollRepository;
 
+	/**
+	 * This method simulates the dice roll.
+	 * 
+	 * @param noOfDice  number of dice.
+	 * @param noOfSides number of sides.
+	 * @param noOfRolls number of rolls.
+	 * @return DiceRollResponse.
+	 */
 	@Override
 	public DiceRollResponse rockAndRoll(int noOfDice, int noOfSides, int noOfRolls) {
 		DiceRollResponse response = new DiceRollResponse();
@@ -47,28 +55,39 @@ public class DiceRollServiceImpl implements DiceRollService {
 		return response;
 	}
 
+	/**
+	 * This method return the simulation results.
+	 * 
+	 * @return DiceRollSummaryResponse.
+	 */
 	@Override
 	public DiceRollSummaryResponse getSimulationResults() {
 		List<Object[]> results = diceRollResultRepository.getSimulationResult();
-		
+
 		DiceRollSummaryResponse response = new DiceRollSummaryResponse();
-		for(Object[] objArray : results) {
-			Integer summation = (Integer)objArray[0];
-			BigInteger totalOccurence = (BigInteger)objArray[1];
-			String combination = (String)objArray[2];
-			BigInteger rollCount = (BigInteger)objArray[3];
-			Double percentage = (double) (totalOccurence.doubleValue()/rollCount.doubleValue()*100);
+		for (Object[] objArray : results) {
+			Integer summation = (Integer) objArray[0];
+			BigInteger totalOccurence = (BigInteger) objArray[1];
+			String combination = (String) objArray[2];
+			BigInteger rollCount = (BigInteger) objArray[3];
+			Double percentage = (double) (totalOccurence.doubleValue() / rollCount.doubleValue() * 100);
 			DiceRollSummary diceRollSummary = response.getSummary().get(combination);
-			if(diceRollSummary == null) {
+			if (diceRollSummary == null) {
 				diceRollSummary = new DiceRollSummary();
 				diceRollSummary.setTotalRolls(rollCount.intValue());
 				response.getSummary().put(combination, diceRollSummary);
 			}
-			diceRollSummary.getResults().add(new DiceRollSumInfomation(summation,totalOccurence.intValue(),percentage));
+			diceRollSummary.getResults()
+					.add(new DiceRollSumInfomation(summation, totalOccurence.intValue(), percentage));
 		}
 		return response;
 	}
 
+	/**
+	 * This method returns the DiceRollResult entity for saving.
+	 * 
+	 * @return DiceRollResult.
+	 */
 	private DiceRollResult createEntity(DiceRoll diceRoll, int sum, int occurence) {
 		DiceRollResult entity = new DiceRollResult();
 		entity.setDiceRoll(diceRoll);
@@ -77,6 +96,11 @@ public class DiceRollServiceImpl implements DiceRollService {
 		return entity;
 	}
 
+	/**
+	 * This method returns the DiceRoll entity for saving.
+	 * 
+	 * @return DiceRoll.
+	 */
 	private DiceRoll createDiceRoll(int noOfDice, int noOfSides, int noOfRolls) {
 		DiceRoll diceRoll = new DiceRoll();
 		diceRoll.setNoOfDice(noOfDice);
@@ -85,6 +109,14 @@ public class DiceRollServiceImpl implements DiceRollService {
 		return diceRoll;
 	}
 
+	/**
+	 * This method generates the random number for dice roll simulation.
+	 * 
+	 * @param noOfDice  number of dice.
+	 * @param noOfSides number of sides.
+	 * @param noOfRolls number of rolls.
+	 * @return Map.
+	 */
 	private Map<Integer, Integer> getSimulationResults(int noOfDice, int noOfSides, int noOfRolls) {
 		// Inclusive
 		int minRange = 1;
