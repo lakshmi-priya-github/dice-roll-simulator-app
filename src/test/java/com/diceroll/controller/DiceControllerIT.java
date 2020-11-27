@@ -34,9 +34,6 @@ class DiceControllerIT {
 	
     @Autowired
     MockMvc mockMvc;
-    
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @MockBean
     private DiceRollService diceRollService;
@@ -73,7 +70,7 @@ class DiceControllerIT {
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(MockMvcResultMatchers.jsonPath("$.results", IsNull.notNullValue()))
         .andExpect(MockMvcResultMatchers.jsonPath("$.results[0].sum", IsEqual.equalTo(4)))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.results[0].occurence", IsEqual.equalTo(25)));;
+        .andExpect(MockMvcResultMatchers.jsonPath("$.results[0].occurence", IsEqual.equalTo(25)));
     }
     
     @Test
@@ -95,42 +92,5 @@ class DiceControllerIT {
      	}
         
     }
-    
-    
-    /*
-
-    @Test
-    public void getHello() throws Exception {
-
-        ResponseEntity<String> response = restTemplate.getForEntity(
-            new URL("http://localhost:" + port + "/dicesimulator/").toString(), String.class);
-        assertEquals("Hello Controller", response.getBody());
-
-    }
-    
-    @Test
-    @DisplayName("Test for 200 status and valid result")
-    public void testDiceRoll200() throws Exception {
-
-        ResponseEntity<String> response = restTemplate.getForEntity(
-            new URL("http://localhost:" + port + "/dicesimulator/roll?noOfDice=2&noOfSides=5&noOfRolls=300").toString(), String.class);
-        //assertEquals("Hello Controller", response.getBody());
-        assertTrue(response.getBody().contains("results"));
-
-    }
-    
-    @Test
-    @DisplayName("Test for invalid request with 500 error ")
-    public void testDiceRoll() throws Exception {
-
-        ResponseEntity<String> response = restTemplate.getForEntity(
-            new URL("http://localhost:" + port + "/dicesimulator/roll?noOfDice=0&noOfSides=5&noOfRolls=300").toString(), String.class);
-        System.out.println("response"+response);
-        //assertTrue(response.getBody().contains("results"));
-
-    }
-    
-    */
-
 
 }
