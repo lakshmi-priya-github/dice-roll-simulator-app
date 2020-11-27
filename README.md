@@ -1,1 +1,1 @@
-# dice-roll-simulator-app
+# dice-roll-app
