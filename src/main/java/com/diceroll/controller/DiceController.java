@@ -45,7 +45,7 @@ public class DiceController {
 	@GetMapping(path = "roll", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> diceRoll(
 			@Valid @RequestParam("noOfDice") @NotNull @Min(value = 1, message = "The number of dice must be at least 1") Integer noOfDice,
-			@Valid @RequestParam("noOfSides") @NotNull @Min(value = 4, message = "The sides of a dice must be at least 4") @Max(value = 6, message = "The sides of a dice must be maximum 6") Integer noOfSides,
+			@Valid @RequestParam("noOfSides") @NotNull @Min(value = 4, message = "The sides of a dice must be at least 4") Integer noOfSides,
 			@Valid @RequestParam("noOfRolls") @NotNull @Min(value = 1, message = "The number of rolls must be at least 1") Integer noOfRolls) {
 
 		return ResponseEntity.ok(diceRollService.rockAndRoll(noOfDice, noOfSides, noOfRolls));
